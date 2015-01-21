@@ -5,6 +5,7 @@ import async.afficheur.Afficheur;
 import async.capteur.Capteur;
 import async.ObserverdeCapteur;
 import async.capteur.strategie.AlgoDiffusion;
+import javafx.scene.control.Label;
 
 import java.util.Iterator;
 import java.util.Timer;
@@ -73,13 +74,28 @@ public class Canal implements ObserverdeCapteur, Capteur {
     }
 
     @Override
-    public void attach(Observer o) {
+    public void setLabel(Label l) {
+        this.capteur.setLabel(l);
+    }
+
+    @Override
+    public Label getLabel() {
+        return this.capteur.getLabel();
+    }
+
+    @Override
+    public void start() {
 
     }
 
     @Override
-    public void detach(Observer o) {
+    public void attach(Observer o) {
+        this.capteur.attach(o);
+    }
 
+    @Override
+    public void detach(Observer o) {
+        this.capteur.detach(o);
     }
 
     @Override

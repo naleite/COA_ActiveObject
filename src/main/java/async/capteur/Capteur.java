@@ -4,6 +4,7 @@ import async.Observer;
 import async.Subject;
 import async.canal.Canal;
 import async.capteur.strategie.AlgoDiffusion;
+import javafx.scene.control.Label;
 
 import java.util.Iterator;
 
@@ -29,4 +30,10 @@ public interface Capteur extends Subject {
     void addCanal(Canal c);
 
     void removeCanal(Canal c);
+
+    void setLabel(Label l);
+
+    Label getLabel();
+
+    void start();
 }

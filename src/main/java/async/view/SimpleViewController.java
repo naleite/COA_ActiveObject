@@ -1,5 +1,9 @@
 package async.view;
 
+import async.afficheur.Afficheur;
+import async.canal.Canal;
+import async.capteur.Capteur;
+import async.capteur.CapteurImpl;
 import async.capteur.strategie.AlgoDiffusion;
 import async.capteur.strategie.DiffusionAtomique;
 import async.capteur.strategie.DiffusionSeq;
@@ -13,9 +17,7 @@ import javafx.scene.media.AudioClip;
 import javafx.scene.shape.Circle;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 /**
  * Created by josian on 08/10/14.
@@ -39,6 +41,7 @@ public class SimpleViewController implements Initializable {
     @FXML
     private Label labelAff2;
 
+    private Capteur capteur;
 
     private List<AlgoDiffusion> algos=new ArrayList<>();
     private AlgoDiffusion algoAtom=new DiffusionAtomique();
@@ -48,7 +51,7 @@ public class SimpleViewController implements Initializable {
     @Override // This method is called by the FXMLLoader when initialization is complete
     public void initialize(URL fxmlFileLocation, ResourceBundle resources)
     {
-
+        //gestion ChoiceBox
         algos.add(algoAtom);
         algos.add(algoSeq);
         algos.add(algoEpo);
@@ -60,12 +63,37 @@ public class SimpleViewController implements Initializable {
                 handleStart();
             }
         });
+
+        //GESTION CAPTEUR
+        capteur = new CapteurImpl();
+        capteur.setLabel(labelCapteur);
+
+        Canal c1 = new Canal(capteur);
+        Canal c2 = new Canal(capteur);
+
+        capteur.attach(c1);
+        capteur.attach(c2);
+
+        capteur.addCanal(c1);
+        capteur.addCanal(c2);
+
+
+
+        Afficheur aff1 = new Afficheur(c1, labelAff1);
+        Afficheur aff2 = new Afficheur(c2, labelAff2);
+        c1.setAfficheur(aff1);
+        c2.setAfficheur(aff2);
+
     }
 
     private void handleStart(){
         AlgoDiffusion testAlgo=(AlgoDiffusion)algoBox.getValue();
+        testAlgo.setCapteur(capteur);
+        capteur.setAlgo(testAlgo);
         System.out.println("start pressed:"+testAlgo);
-        testAlgo.execute();
+
+        capteur.start();
+        //testAlgo.execute();
     }
 
 }

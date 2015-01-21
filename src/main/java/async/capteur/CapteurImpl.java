@@ -4,6 +4,7 @@ import async.Observer;
 import async.canal.Canal;
 import async.capteur.strategie.AlgoDiffusion;
 import async.capteur.strategie.DiffusionAtomique;
+import javafx.scene.control.Label;
 
 import java.util.*;
 
@@ -16,9 +17,10 @@ public class CapteurImpl implements Capteur {
 
     private List<Observer> observers=new ArrayList<>();
 
-    private List<Canal> canals=new ArrayList<>();
+    private List<Canal> canals=new ArrayList<Canal>();
 
     private AlgoDiffusion algo;
+    private Label label;
 
 
     @Override
@@ -44,18 +46,10 @@ public class CapteurImpl implements Capteur {
 
     @Override
     public void tick() {
-        Timer t = new Timer();
-
-        TimerTask task = new TimerTask() {
-            @Override
-            public void run() {
-
-            }
-        };
-        /**if(algo==null){
-            algo=new DiffusionAtomique();
-        }
-        algo.execute();**/
+        Random rand = new Random();
+        int randomNum = rand.nextInt(100);
+        this.setValue(randomNum);
+        System.out.println("timer: "+randomNum);
     }
 
     @Override
@@ -96,5 +90,29 @@ public class CapteurImpl implements Capteur {
         if(canals.contains(c)){
             canals.remove(c);
         }
+    }
+
+    @Override
+    public void setLabel(Label l) {
+        this.label = l;
+    }
+
+    @Override
+    public Label getLabel() {
+        return this.label;
+    }
+
+    @Override
+    public void start() {
+        Timer t = new Timer();
+
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                //capteur.tick();
+                System.out.println("timer...");
+            }
+        };
+        t.schedule(task, 500);
     }
 }
