@@ -36,6 +36,7 @@ public class CapteurImpl implements Capteur {
     @Override
     public void setValue(int value){
         this.value=value;
+
     }
     
     @Override
