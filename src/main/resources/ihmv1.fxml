@@ -9,14 +9,10 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="324.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="async.view.SimpleViewController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="390.0" prefWidth="632.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="async.view.SimpleViewController">
     <children>
-        <Button fx:id="buttonFXStart" layoutX="29.0" layoutY="227.0" mnemonicParsing="false" prefHeight="67.0" prefWidth="111.0" text="START" />
-        <Button fx:id="buttonFXStop" layoutX="172.0" layoutY="227.0" mnemonicParsing="false" prefHeight="67.0" prefWidth="111.0" text="STOP" />
-        <Button fx:id="buttonFXInc" layoutX="322.0" layoutY="226.0" mnemonicParsing="false" prefHeight="67.0" prefWidth="111.0" text="INC" />
-        <Button fx:id="buttonFXDec" layoutX="466.0" layoutY="226.0" mnemonicParsing="false" prefHeight="67.0" prefWidth="111.0" text="DEC" />
-        <Slider fx:id="sliderFX" layoutX="28.0" layoutY="70.0" prefHeight="60.0" prefWidth="197.0" showTickLabels="true" showTickMarks="true" />
-        <Label fx:id="labelFX" alignment="CENTER" layoutX="246.0" layoutY="39.0" prefHeight="115.0" prefWidth="207.0" text="120" textAlignment="CENTER">
+        <Button fx:id="buttonFXStart" layoutX="507.0" layoutY="33.0" mnemonicParsing="false" prefHeight="67.0" prefWidth="111.0" text="START" />
+        <Label fx:id="labelAff1" alignment="CENTER" layoutX="20.0" layoutY="223.0" prefHeight="115.0" prefWidth="207.0" text="120" textAlignment="CENTER">
             <font>
                 <Font size="60.0" />
             </font>
@@ -24,18 +20,34 @@
                 <Blend mode="EXCLUSION" />
             </effect>
         </Label>
-        <Label alignment="CENTER" layoutX="493.0" layoutY="53.0" prefHeight="35.0" prefWidth="87.0" text="LED 1">
+        <Label alignment="CENTER" layoutX="40.0" layoutY="180.0" prefHeight="35.0" prefWidth="187.0" text="AFFICHEUR 1">
             <font>
                 <Font size="26.0" />
             </font>
         </Label>
-        <Label alignment="CENTER" layoutX="494.0" layoutY="114.0" prefHeight="35.0" prefWidth="87.0" text="LED 2">
+        <Label alignment="CENTER" layoutX="384.0" layoutY="180.0" prefHeight="35.0" prefWidth="187.0" text="AFFICHEUR 2">
             <font>
                 <Font size="26.0" />
             </font>
         </Label>
-        <Circle fx:id="circleFXLed1" fill="black" layoutX="478.0" layoutY="71.0" radius="15.0" stroke="BLACK" strokeType="INSIDE" />
-        <Circle fx:id="circleFXLed2" fill="black" layoutX="478.0" layoutY="131.0" radius="15.0" stroke="BLACK" strokeType="INSIDE" />
-        <ToggleButton fx:id="toggleSound" layoutX="466.0" layoutY="180.0" mnemonicParsing="false" text="Sound" />
+      <ChoiceBox fx:id="algoBox" layoutX="35.0" layoutY="53.0" prefWidth="150.0" />
+      <Label layoutX="35.0" layoutY="23.0" prefHeight="16.0" prefWidth="135.0" text="Algo de diffustion:" />
+      <Label fx:id="labelAff2" alignment="CENTER" layoutX="364.0" layoutY="223.0" prefHeight="115.0" prefWidth="207.0" text="120" textAlignment="CENTER">
+         <effect>
+            <Blend mode="EXCLUSION" />
+         </effect>
+         <font>
+            <Font size="60.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelCapture" alignment="CENTER" layoutX="221.0" layoutY="43.0" prefHeight="115.0" prefWidth="207.0" text="120" textAlignment="CENTER">
+         <effect>
+            <Blend mode="EXCLUSION" />
+         </effect>
+         <font>
+            <Font size="60.0" />
+         </font>
+      </Label>
+      <Label layoutX="249.0" layoutY="25.0" prefHeight="16.0" prefWidth="135.0" text="CAPTEUR:" />
     </children>
 </Pane>

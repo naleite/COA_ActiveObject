@@ -29,7 +29,7 @@ public class ViewFX extends Application {
         FXMLLoader fxmlloader = new FXMLLoader();
         root = fxmlloader.load(getClass().getClassLoader().getResource("ihmv1.fxml"));
 
-        Scene scene = new Scene(root, 600,400);
+        Scene scene = new Scene(root);
         stage.setFullScreen(false);
         stage.setResizable(false);
         stage.setScene(scene);

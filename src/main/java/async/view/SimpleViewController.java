@@ -2,10 +2,7 @@ package async.view;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
-import javafx.scene.control.ToggleButton;
+import javafx.scene.control.*;
 import javafx.scene.media.AudioClip;
 import javafx.scene.shape.Circle;
 
@@ -23,28 +20,18 @@ public class SimpleViewController implements Initializable {
     private Button buttonFXStart;
 
     @FXML
-    private Button buttonFXStop;
+    private ChoiceBox algoBox;
 
     @FXML
-    private Button buttonFXInc;
+    private Label labelCapteur;
 
     @FXML
-    private Button buttonFXDec;
+    private Label labelAff1;
 
     @FXML
-    private Slider sliderFX; //le slider pour modifier le tempo
+    private Label labelAff2;
 
-    @FXML
-    private Label labelFX; //afficheur du tempo
 
-    @FXML
-    private Circle circleFXLed1; //la led 1
-
-    @FXML
-    private Circle circleFXLed2;//la led 2
-
-    @FXML
-    public ToggleButton toggleSound; //le bouton sound
 
 
     @Override // This method is called by the FXMLLoader when initialization is complete
