@@ -5,9 +5,7 @@ import async.canal.Canal;
 import async.capteur.strategie.AlgoDiffusion;
 import async.capteur.strategie.DiffusionAtomique;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by naleite on 15/1/7.
@@ -46,11 +44,18 @@ public class CapteurImpl implements Capteur {
 
     @Override
     public void tick() {
+        Timer t = new Timer();
 
-        if(algo==null){
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+
+            }
+        };
+        /**if(algo==null){
             algo=new DiffusionAtomique();
         }
-        algo.execute();
+        algo.execute();**/
     }
 
     @Override

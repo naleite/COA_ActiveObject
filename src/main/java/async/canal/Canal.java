@@ -7,6 +7,7 @@ import async.ObserverdeCapteur;
 import async.capteur.strategie.AlgoDiffusion;
 
 import java.util.Iterator;
+import java.util.Timer;
 
 /**
  * Created by naleite on 15/1/7.
@@ -15,6 +16,7 @@ public class Canal implements ObserverdeCapteur, Capteur {
 
     private Capteur capteur;
     private Afficheur afficheur;
+    private AlgoDiffusion algo;
 
     public Canal(Capteur capteur){
         this.capteur=capteur;
@@ -27,12 +29,12 @@ public class Canal implements ObserverdeCapteur, Capteur {
 
     @Override
     public AlgoDiffusion getAlgo() {
-        return null;
+        return algo;
     }
 
     @Override
     public void setAlgo(AlgoDiffusion algo) {
-
+        this.algo = algo;
     }
 
     @Override
