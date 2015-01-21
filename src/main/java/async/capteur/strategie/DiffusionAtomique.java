@@ -30,4 +30,9 @@ public class DiffusionAtomique implements AlgoDiffusion {
     public void setCapteur(Capteur c){
         this.capteur=c;
     }
+
+    @Override
+    public String toString(){
+        return "Diffustion Atomique";
+    }
 }

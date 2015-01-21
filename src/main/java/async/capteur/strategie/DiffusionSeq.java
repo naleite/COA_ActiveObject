@@ -21,4 +21,9 @@ public class DiffusionSeq implements AlgoDiffusion {
     public void setCapteur(Capteur c) {
 
     }
+
+    @Override
+    public String toString(){
+        return "Diffustion Sequentielle";
+    }
 }

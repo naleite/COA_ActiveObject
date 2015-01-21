@@ -14,10 +14,16 @@ public class DiffustionEpoque implements AlgoDiffusion{
     @Override
     public void execute() {
 
+        System.out.println("Algo epoque");
     }
 
     @Override
     public void setCapteur(Capteur c) {
 
+    }
+
+    @Override
+    public String toString(){
+        return "Gestion par epoque";
     }
 }
