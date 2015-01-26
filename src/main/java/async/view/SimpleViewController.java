@@ -41,6 +41,12 @@ public class SimpleViewController implements Initializable {
     @FXML
     private Label labelAff2;
 
+    @FXML
+    private Label labelAff3;
+
+    @FXML
+    private Label labelAff4;
+
     private Capteur capteur;
 
     private List<AlgoDiffusion> algos=new ArrayList<>();

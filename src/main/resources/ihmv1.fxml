@@ -12,7 +12,7 @@
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="390.0" prefWidth="632.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="async.view.SimpleViewController">
     <children>
         <Button fx:id="buttonFXStart" layoutX="507.0" layoutY="33.0" mnemonicParsing="false" prefHeight="67.0" prefWidth="111.0" text="START" />
-        <Label fx:id="labelAff1" alignment="TOP_LEFT" layoutX="35.0" layoutY="234.0" prefHeight="115.0" prefWidth="207.0" text="120">
+        <Label fx:id="labelAff1" alignment="TOP_LEFT" layoutX="35.0" layoutY="234.0" prefHeight="16.0" prefWidth="187.0" text="120">
             <font>
                 <Font size="14.0" />
             </font>
@@ -32,7 +32,7 @@
         </Label>
       <ChoiceBox fx:id="algoBox" layoutX="35.0" layoutY="53.0" prefWidth="150.0" />
       <Label layoutX="35.0" layoutY="23.0" prefHeight="16.0" prefWidth="135.0" text="Algo de diffustion:" />
-      <Label fx:id="labelAff2" alignment="TOP_LEFT" layoutX="390.0" layoutY="234.0" prefHeight="115.0" prefWidth="207.0" text="120">
+      <Label fx:id="labelAff2" alignment="TOP_LEFT" layoutX="390.0" layoutY="234.0" prefHeight="16.0" prefWidth="187.0" text="120">
          <effect>
             <Blend mode="EXCLUSION" />
          </effect>
@@ -49,5 +49,31 @@
          </font>
       </Label>
       <Label layoutX="249.0" layoutY="25.0" prefHeight="16.0" prefWidth="135.0" text="CAPTEUR:" />
+      <Label alignment="CENTER" layoutX="38.0" layoutY="271.0" prefHeight="35.0" prefWidth="187.0" text="AFFICHEUR 3">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelAff3" alignment="TOP_LEFT" layoutX="37.0" layoutY="319.0" prefHeight="16.0" prefWidth="187.0" text="120">
+         <effect>
+            <Blend mode="EXCLUSION" />
+         </effect>
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelAff4" alignment="TOP_LEFT" layoutX="388.0" layoutY="321.0" prefHeight="16.0" prefWidth="187.0" text="120">
+         <effect>
+            <Blend mode="EXCLUSION" />
+         </effect>
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="389.0" layoutY="273.0" prefHeight="35.0" prefWidth="187.0" text="AFFICHEUR 4">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
     </children>
 </Pane>
