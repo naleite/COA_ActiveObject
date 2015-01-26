@@ -10,10 +10,7 @@ import javafx.scene.control.Label;
 
 import java.util.Iterator;
 import java.util.Timer;
-import java.util.concurrent.Callable;
-import java.util.concurrent.FutureTask;
-import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 /**
  * Created by naleite on 15/1/7.
@@ -48,12 +45,17 @@ public class Canal implements ObserverdeCapteur, Capteur {
 
     }
 
-    public ScheduledFuture getValue() {
+    @Override
+    public Future getValueFuture() {
         Callable<Integer> c = () -> {return this.capteur.getValue();};
         return SimpleViewController.scheduledExecutor.schedule(c, 500, TimeUnit.MILLISECONDS);
     }
 
 
+    @Override
+    public int getValue(){
+        return 0;
+    }
     @Override
     public void tick() {
 

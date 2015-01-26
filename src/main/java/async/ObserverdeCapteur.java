@@ -2,6 +2,7 @@ package async;
 
 import async.capteur.Capteur;
 
+import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledFuture;
 
 /**
@@ -11,5 +12,5 @@ public interface ObserverdeCapteur extends Observer<Capteur> {
     @Override
     void update(Capteur subject);
 
-    ScheduledFuture getValue();
+    Future getValueFuture();
 }
