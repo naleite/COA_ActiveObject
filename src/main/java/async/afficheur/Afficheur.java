@@ -6,11 +6,17 @@ import async.capteur.Capteur;
 import javafx.application.Platform;
 import javafx.scene.control.Label;
 
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+
 /**
  * Created by naleite on 15/1/7.
  */
 public class Afficheur implements ObserverdeCapteur {
     private Canal canal;
+    private Future future;
     private Label label;
 
     public Afficheur(Canal c, Label label){
@@ -20,10 +26,21 @@ public class Afficheur implements ObserverdeCapteur {
 
     @Override
     public void update(Capteur subject) {
-        int v = this.canal.getValue();
+        future = this.canal.getValueFuture();
         try {
-            Platform.runLater(() -> label.setText(Integer.toString(v)));
-        } catch (Exception e) {}
+            int value= (Integer) future.get(500, TimeUnit.MILLISECONDS);
+            Platform.runLater(() -> label.setText(Integer.toString(value)));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
 
     }
+
+    @Override
+    public Future getValueFuture() {
+        return null;
+    }
+
+
 }
