@@ -36,4 +36,6 @@ public interface Capteur extends Subject {
     Label getLabel();
 
     void start();
+
+
 }

@@ -23,6 +23,7 @@ public class DiffusionAtomique implements AlgoDiffusion {
         Iterator<Canal> canals=capteur.canalIterator();
         while(canals.hasNext()){
             canals.next().update(capteur);
+            System.out.println("call canal");
         }
     }
 

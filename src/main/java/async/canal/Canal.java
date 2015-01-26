@@ -5,10 +5,15 @@ import async.afficheur.Afficheur;
 import async.capteur.Capteur;
 import async.ObserverdeCapteur;
 import async.capteur.strategie.AlgoDiffusion;
+import async.view.SimpleViewController;
 import javafx.scene.control.Label;
 
 import java.util.Iterator;
 import java.util.Timer;
+import java.util.concurrent.Callable;
+import java.util.concurrent.FutureTask;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by naleite on 15/1/7.
@@ -43,10 +48,11 @@ public class Canal implements ObserverdeCapteur, Capteur {
 
     }
 
-    @Override
-    public int getValue() {
-        return this.capteur.getValue();
+    public ScheduledFuture getValue() {
+        Callable<Integer> c = () -> {return this.capteur.getValue();};
+        return SimpleViewController.scheduledExecutor.schedule(c, 500, TimeUnit.MILLISECONDS);
     }
+
 
     @Override
     public void tick() {
@@ -101,5 +107,21 @@ public class Canal implements ObserverdeCapteur, Capteur {
     @Override
     public void update(Capteur subject) {
         this.afficheur.update(subject);
+    }
+
+
+    class MyCallable implements Callable
+    {
+        Runnable r;
+
+        MyCallable(final Runnable r)
+        {
+            this.r = r;
+        }
+
+        @Override
+        public Object call() throws Exception {
+            return r;
+        }
     }
 }

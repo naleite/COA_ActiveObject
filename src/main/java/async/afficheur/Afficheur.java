@@ -3,6 +3,7 @@ package async.afficheur;
 import async.ObserverdeCapteur;
 import async.canal.Canal;
 import async.capteur.Capteur;
+import javafx.application.Platform;
 import javafx.scene.control.Label;
 
 /**
@@ -20,6 +21,9 @@ public class Afficheur implements ObserverdeCapteur {
     @Override
     public void update(Capteur subject) {
         int v = this.canal.getValue();
-        label.setText(Integer.toString(v));
+        try {
+            Platform.runLater(() -> label.setText(Integer.toString(v)));
+        } catch (Exception e) {}
+
     }
 }

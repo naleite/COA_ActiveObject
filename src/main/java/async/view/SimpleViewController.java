@@ -18,6 +18,8 @@ import javafx.scene.shape.Circle;
 
 import java.net.URL;
 import java.util.*;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
 
 /**
  * Created by josian on 08/10/14.
@@ -49,6 +51,8 @@ public class SimpleViewController implements Initializable {
 
     private Capteur capteur;
 
+    public static ScheduledExecutorService scheduledExecutor = new ScheduledThreadPoolExecutor(2) ;
+
     private List<AlgoDiffusion> algos=new ArrayList<>();
     private AlgoDiffusion algoAtom=new DiffusionAtomique();
     private AlgoDiffusion algoSeq=new DiffusionSeq();
@@ -76,20 +80,28 @@ public class SimpleViewController implements Initializable {
 
         Canal c1 = new Canal(capteur);
         Canal c2 = new Canal(capteur);
+        Canal c3 = new Canal(capteur);
+        Canal c4 = new Canal(capteur);
 
         capteur.attach(c1);
         capteur.attach(c2);
+        capteur.attach(c3);
+        capteur.attach(c4);
 
         capteur.addCanal(c1);
         capteur.addCanal(c2);
-
-
+        capteur.addCanal(c3);
+        capteur.addCanal(c4);
 
         Afficheur aff1 = new Afficheur(c1, labelAff1);
         Afficheur aff2 = new Afficheur(c2, labelAff2);
+        Afficheur aff3 = new Afficheur(c2, labelAff3);
+        Afficheur aff4 = new Afficheur(c2, labelAff4);
+
         c1.setAfficheur(aff1);
         c2.setAfficheur(aff2);
-
+        c3.setAfficheur(aff3);
+        c4.setAfficheur(aff4);
     }
 
     private void handleStart(){
