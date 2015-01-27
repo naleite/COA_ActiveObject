@@ -28,7 +28,7 @@ public class Afficheur implements ObserverdeCapteur {
     public void update(Capteur subject) {
         future = this.canal.getValueFuture();
         try {
-            int value= (Integer) future.get(500, TimeUnit.MILLISECONDS);
+            int value= (Integer) future.get(2000, TimeUnit.MILLISECONDS);
             Platform.runLater(() -> label.setText(Integer.toString(value)));
         } catch (Exception e) {
             e.printStackTrace();

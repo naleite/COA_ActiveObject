@@ -113,7 +113,7 @@ public class CapteurImpl implements Capteur {
     @Override
     public void start() {
         MyTimer timer = new MyTimer();
-        timer.scheduleAtFixedRate(() -> this.tick(), 0, 800);
+        timer.scheduleAtFixedRate(() -> this.tick(), 0, 200);
 
     }
 }

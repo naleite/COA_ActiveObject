@@ -49,7 +49,7 @@ public class SimpleViewController implements Initializable {
 
     private Capteur capteur;
 
-    public static ScheduledExecutorService scheduledExecutor = new ScheduledThreadPoolExecutor(2) ;
+    public static ScheduledExecutorService scheduledExecutor = new ScheduledThreadPoolExecutor(4) ;
 
     private List<AlgoDiffusion> algos=new ArrayList<>();
     private AlgoDiffusion algoAtom=new DiffusionAtomique();
