@@ -28,7 +28,7 @@ public class Afficheur implements ObserverdeCapteurAsync {
 
         future = subject.getValueFuture();
         try {
-            int value= (Integer) future.get(5000, TimeUnit.MILLISECONDS);
+            int value= (Integer) future.get();
             Platform.runLater(() -> label.setText(Integer.toString(value)));
         } catch (Exception e) {
             e.printStackTrace();

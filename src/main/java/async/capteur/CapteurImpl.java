@@ -41,12 +41,19 @@ public class CapteurImpl implements Capteur {
 
     @Override
     public void setValue(int value){
-        this.value=value;
-        try {
-            Platform.runLater(() -> getLabel().setText(String.valueOf(value)));
-        } catch (Exception e) {}
-        algo.configure(this.canals.size());
-        algo.execute();
+        if(algo.isDone())
+        {
+            this.value=value;
+            algo.configure(this.canals.size());
+            try {
+                Platform.runLater(() -> getLabel().setText(String.valueOf(value)));
+            } catch (Exception e) {}
+            algo.execute();
+        }
+        else
+        {
+            System.out.println("not finished algo");
+        }
     }
     
     @Override
@@ -118,7 +125,7 @@ public class CapteurImpl implements Capteur {
         //MyTimer timer = new MyTimer();
         //timer.scheduleAtFixedRate(() -> this.tick(), 0, 200);
         SimpleViewController.scheduledExecutor.scheduleAtFixedRate(
-                ()->this.tick(),0, 1000, TimeUnit.MILLISECONDS
+                ()->this.tick(),0, 5000, TimeUnit.MILLISECONDS
         );
     }
 }

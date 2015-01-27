@@ -46,7 +46,9 @@ public class Canal implements ObserverdeCapteurAsync, Capteur {
 
     @Override
     public Future<Integer> getValueFuture() {
-        Callable<Integer> c = () -> {return this.capteur.getValue();};
+        Callable<Integer> c = () -> {
+            System.out.println("getValueFuture called");
+            return this.capteur.getValue();};
         return SimpleViewController.scheduledExecutor.schedule(c, 2000, TimeUnit.MILLISECONDS);
     }
 
@@ -61,14 +63,16 @@ public class Canal implements ObserverdeCapteurAsync, Capteur {
 
     @Override
     public void update(ObserverdeCapteurAsync subject) {
+        System.out.println("Not executed");
         this.afficheur.update((ObserverdeCapteurAsync) this);
     }
 
 
     @Override
     public int getValue(){
-        return 0;
+        return capteur.getValue();
     }
+
     @Override
     public void tick() {
 
