@@ -8,9 +8,13 @@ import java.util.concurrent.ScheduledFuture;
 /**
  * Created by naleite on 15/1/7.
  */
-public interface ObserverdeCapteur extends Observer<Capteur> {
+public interface ObserverdeCapteurAsync extends Observer<Capteur> {
     @Override
     void update(Capteur subject);
 
     Future getValueFuture();
+
+    Future updatefuture(Capteur c);
+
+    void update(ObserverdeCapteurAsync subject);
 }

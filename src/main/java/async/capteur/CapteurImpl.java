@@ -4,12 +4,14 @@ import async.Observer;
 import async.canal.Canal;
 import async.capteur.strategie.AlgoDiffusion;
 import async.capteur.strategie.DiffusionAtomique;
+import async.view.SimpleViewController;
 import javafx.application.Platform;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 
 import java.sql.Time;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by naleite on 15/1/7.
@@ -43,6 +45,7 @@ public class CapteurImpl implements Capteur {
         try {
             Platform.runLater(() -> getLabel().setText(String.valueOf(value)));
         } catch (Exception e) {}
+        algo.configure(this.canals.size());
         algo.execute();
     }
     
@@ -112,8 +115,10 @@ public class CapteurImpl implements Capteur {
 
     @Override
     public void start() {
-        MyTimer timer = new MyTimer();
-        timer.scheduleAtFixedRate(() -> this.tick(), 0, 200);
-
+        //MyTimer timer = new MyTimer();
+        //timer.scheduleAtFixedRate(() -> this.tick(), 0, 200);
+        SimpleViewController.scheduledExecutor.scheduleAtFixedRate(
+                ()->this.tick(),0, 1000, TimeUnit.MILLISECONDS
+        );
     }
 }

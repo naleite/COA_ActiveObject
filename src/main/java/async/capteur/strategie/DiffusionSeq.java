@@ -7,8 +7,9 @@ import async.capteur.Capteur;
  */
 public class DiffusionSeq implements AlgoDiffusion {
 
+
     @Override
-    public void configure() {
+    public void configure(int nbAfficheur) {
 
     }
 
@@ -20,6 +21,11 @@ public class DiffusionSeq implements AlgoDiffusion {
     @Override
     public void setCapteur(Capteur c) {
 
+    }
+
+    @Override
+    public boolean isDone() {
+        return false;
     }
 
     @Override

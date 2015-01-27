@@ -6,8 +6,16 @@ import async.capteur.Capteur;
  * Created by naleite on 15/1/7.
  */
 public interface AlgoDiffusion {
-    public void configure();
+
+    void configure(int nbAfficheur);
+
     public void execute();
 
     void setCapteur(Capteur c);
+
+    /**
+     *
+     * @return vrai si la diffusion est terminé, faux sinon
+     */
+    boolean isDone();
 }

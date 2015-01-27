@@ -3,19 +3,18 @@ package async.canal;
 import async.Observer;
 import async.afficheur.Afficheur;
 import async.capteur.Capteur;
-import async.ObserverdeCapteur;
+import async.ObserverdeCapteurAsync;
 import async.capteur.strategie.AlgoDiffusion;
 import async.view.SimpleViewController;
 import javafx.scene.control.Label;
 
 import java.util.Iterator;
-import java.util.Timer;
 import java.util.concurrent.*;
 
 /**
  * Created by naleite on 15/1/7.
  */
-public class Canal implements ObserverdeCapteur, Capteur {
+public class Canal implements ObserverdeCapteurAsync, Capteur {
 
     private Capteur capteur;
     private Afficheur afficheur;
@@ -46,9 +45,23 @@ public class Canal implements ObserverdeCapteur, Capteur {
     }
 
     @Override
-    public Future getValueFuture() {
+    public Future<Integer> getValueFuture() {
         Callable<Integer> c = () -> {return this.capteur.getValue();};
-        return SimpleViewController.scheduledExecutor.schedule(c, 500, TimeUnit.MILLISECONDS);
+        return SimpleViewController.scheduledExecutor.schedule(c, 2000, TimeUnit.MILLISECONDS);
+    }
+
+    @Override
+    public Future updatefuture(Capteur ca) {
+        Callable<String> c = () -> {
+            this.afficheur.update((ObserverdeCapteurAsync) this);
+            System.out.println("executorService update Canal");
+            return "ok";};
+        return SimpleViewController.scheduledExecutor.schedule(c, 2000, TimeUnit.MILLISECONDS);
+    }
+
+    @Override
+    public void update(ObserverdeCapteurAsync subject) {
+        this.afficheur.update((ObserverdeCapteurAsync) this);
     }
 
 
@@ -108,7 +121,8 @@ public class Canal implements ObserverdeCapteur, Capteur {
 
     @Override
     public void update(Capteur subject) {
-        this.afficheur.update(subject);
+
+       this.afficheur.update(subject);//methode sync
     }
 
 
