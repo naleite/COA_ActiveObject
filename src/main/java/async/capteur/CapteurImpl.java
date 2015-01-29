@@ -46,9 +46,7 @@ public class CapteurImpl implements Capteur {
         {
             this.value=value;
             algo.configure(this.canals.size(), value);
-            try {
-                Platform.runLater(() -> getLabel().setText(String.valueOf(value)));
-            } catch (Exception e) {}
+
             algo.execute();
         }
         else
@@ -67,9 +65,11 @@ public class CapteurImpl implements Capteur {
     public void tick() {
         //Random rand = new Random();
         //int randomNum = rand.nextInt(100);
-        int ti = ++tickValue;
+        int ti =++tickValue;
         this.setValue(ti);
-
+        try {
+            Platform.runLater(() -> getLabel().setText(String.valueOf(ti)));
+        } catch (Exception e) {}
         System.out.println("timer: " + ti);
     }
 
