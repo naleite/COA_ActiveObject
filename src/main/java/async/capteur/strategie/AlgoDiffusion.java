@@ -7,11 +7,13 @@ import async.capteur.Capteur;
  */
 public interface AlgoDiffusion {
 
-    void configure(int nbAfficheur);
+    void configure(int nbAfficheur, int newValue);
 
     public void execute();
 
     void setCapteur(Capteur c);
+
+    int getValue();
 
     /**
      *

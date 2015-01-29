@@ -28,6 +28,7 @@ public class CapteurImpl implements Capteur {
 
     private Label label;
 
+    public int tickValue =0;
 
     @Override
     public AlgoDiffusion getAlgo() {
@@ -44,7 +45,7 @@ public class CapteurImpl implements Capteur {
         if(algo.isDone())
         {
             this.value=value;
-            algo.configure(this.canals.size());
+            algo.configure(this.canals.size(), value);
             try {
                 Platform.runLater(() -> getLabel().setText(String.valueOf(value)));
             } catch (Exception e) {}
@@ -52,22 +53,24 @@ public class CapteurImpl implements Capteur {
         }
         else
         {
-            System.out.println("not finished algo");
+            System.out.println("CapteurImpl#notFinishedAlgo");
         }
     }
     
     @Override
     public int getValue() {
-        return this.value;
+
+        return algo.getValue();
     }
 
     @Override
     public void tick() {
-        Random rand = new Random();
-        int randomNum = rand.nextInt(100);
-        this.setValue(randomNum);
+        //Random rand = new Random();
+        //int randomNum = rand.nextInt(100);
+        int ti = ++tickValue;
+        this.setValue(ti);
 
-        System.out.println("timer: " + randomNum);
+        System.out.println("timer: " + ti);
     }
 
     @Override
@@ -125,7 +128,7 @@ public class CapteurImpl implements Capteur {
         //MyTimer timer = new MyTimer();
         //timer.scheduleAtFixedRate(() -> this.tick(), 0, 200);
         SimpleViewController.scheduledExecutor.scheduleAtFixedRate(
-                ()->this.tick(),0, 5000, TimeUnit.MILLISECONDS
+                ()->this.tick(),0, 1000, TimeUnit.MILLISECONDS
         );
     }
 }

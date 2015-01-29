@@ -8,8 +8,9 @@ import async.capteur.Capteur;
 public class DiffustionEpoque implements AlgoDiffusion{
 
 
+
     @Override
-    public void configure(int nbAfficheur) {
+    public void configure(int nbAfficheur, int newValue) {
 
     }
 
@@ -22,6 +23,11 @@ public class DiffustionEpoque implements AlgoDiffusion{
     @Override
     public void setCapteur(Capteur c) {
 
+    }
+
+    @Override
+    public int getValue() {
+        return 0;
     }
 
     @Override

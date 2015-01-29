@@ -14,17 +14,20 @@ import java.util.concurrent.Future;
 public class DiffusionAtomique implements AlgoDiffusion {
     private int nbAfficheur; //nb afficheur
     private Capteur capteur;
+    private int value;
     private List<Future<Integer>> listFutur = new ArrayList<Future<Integer>>();
 
     @Override
-    public void configure(int nbAfficheur) {
+    public void configure(int nbAfficheur, int newValue) {
         this.nbAfficheur  = nbAfficheur;
+        this.value = newValue;
     }
 
     @Override
     public void execute() {
 
         Iterator<Canal> canals=capteur.canalIterator();
+        listFutur.clear();
         while(canals.hasNext()){
             Future<Integer> f1 = canals.next().updatefuture(capteur);
             listFutur.add(f1);
@@ -37,15 +40,26 @@ public class DiffusionAtomique implements AlgoDiffusion {
     }
 
     @Override
+    public int getValue() {
+        return value;
+    }
+
+    @Override
     public boolean isDone() {
-        boolean res = false;
+        boolean res = true;
+        int currentFinishedFuture = 0;
         if(listFutur.size() != nbAfficheur)
         {
             return false;
         }
         Iterator<Future<Integer>> iter = listFutur.iterator();
         while(iter.hasNext()){
-            if(!iter.next().isDone())
+            Future<Integer> currFuture = iter.next();
+            if(currFuture.isDone())
+            {
+                currentFinishedFuture++;
+            }
+            if(!currFuture.isDone())
             {
                 res = false;
                 break;
@@ -55,6 +69,7 @@ public class DiffusionAtomique implements AlgoDiffusion {
                 res = true;
             }
         }
+        System.out.println("ALGO IS DONE = "+res +" "+currentFinishedFuture+"/"+listFutur.size());
         return res;
     }
 
