@@ -75,6 +75,6 @@ public class DiffusionAtomique implements AlgoDiffusion {
 
     @Override
     public String toString(){
-        return "Diffustion Atomique";
+        return "Diffustion Sequentielle";
     }
 }

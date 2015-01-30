@@ -46,6 +46,7 @@ public class DiffusionSeq implements AlgoDiffusion {
         int v = this.valueCopie.get(0);
         if(currentDemandeGetValue == nbAfficheur)
         {
+            currentDemandeGetValue = 0;
             this.valueCopie.remove(0);
         }
         return  v;
@@ -58,6 +59,6 @@ public class DiffusionSeq implements AlgoDiffusion {
 
     @Override
     public String toString(){
-        return "Diffustion Sequentielle";
+        return "Diffustion Atomique";
     }
 }
