@@ -125,10 +125,13 @@ public class CapteurImpl implements Capteur {
 
     @Override
     public void start() {
-        //MyTimer timer = new MyTimer();
-        //timer.scheduleAtFixedRate(() -> this.tick(), 0, 200);
         SimpleViewController.scheduledExecutor.scheduleAtFixedRate(
                 ()->this.tick(),0, 1000, TimeUnit.MILLISECONDS
         );
+    }
+
+    @Override
+    public int getRealLastValue() {
+        return value;
     }
 }

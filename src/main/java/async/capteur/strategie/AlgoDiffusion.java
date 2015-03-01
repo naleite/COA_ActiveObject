@@ -20,4 +20,6 @@ public interface AlgoDiffusion {
      * @return vrai si la diffusion est terminé, faux sinon
      */
     boolean isDone();
+
+    void clear(); //clear all data
 }

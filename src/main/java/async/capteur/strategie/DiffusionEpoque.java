@@ -1,38 +1,48 @@
 package async.capteur.strategie;
 
+import async.canal.Canal;
 import async.capteur.Capteur;
 
+import java.util.Iterator;
+
 /**
- * Created by naleite on 15/1/7.
+ *
  */
-public class DiffustionEpoque implements AlgoDiffusion{
-
-
+public class DiffusionEpoque implements AlgoDiffusion{
+    private Capteur capteur;
+    int value;
 
     @Override
     public void configure(int nbAfficheur, int newValue) {
-
+        this.value = newValue;
     }
 
     @Override
     public void execute() {
-
-        System.out.println("Algo epoque");
+        Iterator<Canal> canals=capteur.canalIterator();
+        while(canals.hasNext()){
+            canals.next().updatefuture(capteur);
+        }
     }
 
     @Override
     public void setCapteur(Capteur c) {
-
+        this.capteur=c;
     }
 
     @Override
     public int getValue() {
-        return 0;
+        return value;
     }
 
     @Override
     public boolean isDone() {
-        return false;
+        return true;
+    }
+
+    @Override
+    public void clear() {
+
     }
 
     @Override

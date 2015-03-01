@@ -7,7 +7,7 @@ import async.capteur.CapteurImpl;
 import async.capteur.strategie.AlgoDiffusion;
 import async.capteur.strategie.DiffusionAtomique;
 import async.capteur.strategie.DiffusionSeq;
-import async.capteur.strategie.DiffustionEpoque;
+import async.capteur.strategie.DiffusionEpoque;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -54,7 +54,7 @@ public class SimpleViewController implements Initializable {
     private List<AlgoDiffusion> algos=new ArrayList<>();
     private AlgoDiffusion algoAtom=new DiffusionAtomique();
     private AlgoDiffusion algoSeq=new DiffusionSeq();
-    private AlgoDiffusion algoEpo=new DiffustionEpoque();
+    private AlgoDiffusion algoEpo=new DiffusionEpoque();
 
     @Override // This method is called by the FXMLLoader when initialization is complete
     public void initialize(URL fxmlFileLocation, ResourceBundle resources)
@@ -105,11 +105,11 @@ public class SimpleViewController implements Initializable {
     private void handleStart(){
         AlgoDiffusion testAlgo=(AlgoDiffusion)algoBox.getValue();
         testAlgo.setCapteur(capteur);
+        testAlgo.clear();//clear data from previous use
         capteur.setAlgo(testAlgo);
         System.out.println("start pressed:"+testAlgo);
 
         capteur.start();
-        //testAlgo.execute();
     }
 
 }

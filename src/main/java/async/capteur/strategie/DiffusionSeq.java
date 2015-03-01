@@ -15,8 +15,12 @@ public class DiffusionSeq implements AlgoDiffusion {
     private int value;
     private Capteur capteur;
     private ArrayList<Integer> valueCopie; //tableau des valeurs non envoyées
-
     private int currentDemandeGetValue;
+
+    public DiffusionSeq() {
+        valueCopie = new ArrayList<Integer>();
+    }
+
     @Override
     public void configure(int nbAfficheur, int newValue) {
         this.nbAfficheur = nbAfficheur;
@@ -58,7 +62,14 @@ public class DiffusionSeq implements AlgoDiffusion {
     }
 
     @Override
+    public void clear() {
+        currentDemandeGetValue = 0;
+        valueCopie.clear();
+        valueCopie.add(capteur.getRealLastValue());
+    }
+
+    @Override
     public String toString(){
-        return "Diffustion Atomique";
+        return "Diffustion Sequentielle";
     }
 }

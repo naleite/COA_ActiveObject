@@ -9,13 +9,19 @@ import java.util.List;
 import java.util.concurrent.Future;
 
 /**
- * Created by naleite on 15/1/7.
+ *
  */
 public class DiffusionAtomique implements AlgoDiffusion {
     private int nbAfficheur; //nb afficheur
     private Capteur capteur;
     private int value;
+    private boolean execute_algo;
     private List<Future<Integer>> listFutur = new ArrayList<Future<Integer>>();
+
+    public DiffusionAtomique() {
+        listFutur = new ArrayList<Future<Integer>>();
+        execute_algo = false;
+    }
 
     @Override
     public void configure(int nbAfficheur, int newValue) {
@@ -48,12 +54,18 @@ public class DiffusionAtomique implements AlgoDiffusion {
     public boolean isDone() {
         boolean res = true;
         int currentFinishedFuture = 0;
+        if(execute_algo) {
+            execute_algo = false;
+            System.out.println("changing algorithm");
+            return true; // si on vient de changer de strategie
+                        //evite de tester si tous les obs sont notifiés
+        }
         if(listFutur.size() != nbAfficheur)
         {
             return false;
         }
         Iterator<Future<Integer>> iter = listFutur.iterator();
-        while(iter.hasNext()){
+        while(iter.hasNext()) {
             Future<Integer> currFuture = iter.next();
             if(currFuture.isDone())
             {
@@ -64,17 +76,20 @@ public class DiffusionAtomique implements AlgoDiffusion {
                 res = false;
                 break;
             }
-            else
-            {
-                res = true;
-            }
         }
         System.out.println("ALGO IS DONE = "+res +" "+currentFinishedFuture+"/"+listFutur.size());
         return res;
     }
 
     @Override
+    public void clear() {
+        listFutur.clear();
+        value = capteur.getRealLastValue();
+        execute_algo = true;
+    }
+
+    @Override
     public String toString(){
-        return "Diffustion Sequentielle";
+        return "Diffustion Atomique";
     }
 }

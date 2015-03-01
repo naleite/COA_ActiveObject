@@ -37,5 +37,5 @@ public interface Capteur extends Subject {
 
     void start();
 
-
+    int getRealLastValue();//return the last observ value
 }

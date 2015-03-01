@@ -9,6 +9,7 @@ import async.view.SimpleViewController;
 import javafx.scene.control.Label;
 
 import java.util.Iterator;
+import java.util.Random;
 import java.util.concurrent.*;
 
 /**
@@ -49,7 +50,9 @@ public class Canal implements ObserverdeCapteurAsync, Capteur {
         Callable<Integer> c = () -> {
             System.out.println("getValueFuture Canal#getValueFuture");
             return this.capteur.getValue();};
-        return SimpleViewController.scheduledExecutor.schedule(c, 500, TimeUnit.MILLISECONDS);
+
+        int delay = 100 + (int)(Math.random()*400);
+        return SimpleViewController.scheduledExecutor.schedule(c, delay, TimeUnit.MILLISECONDS);
     }
 
     @Override
@@ -58,7 +61,8 @@ public class Canal implements ObserverdeCapteurAsync, Capteur {
             this.afficheur.update((ObserverdeCapteurAsync) this);
             System.out.println("executorService update Canal#updatefuture");
             return "ok";};
-        return SimpleViewController.scheduledExecutor.schedule(c, 500, TimeUnit.MILLISECONDS);
+        int delay = 100 + (int)(Math.random()*400); //radom value between 500 and 1000
+        return SimpleViewController.scheduledExecutor.schedule(c, delay, TimeUnit.MILLISECONDS);
     }
 
     @Override
@@ -114,6 +118,11 @@ public class Canal implements ObserverdeCapteurAsync, Capteur {
     }
 
     @Override
+    public int getRealLastValue() {
+        return 0;
+    }
+
+    @Override
     public void attach(Observer o) {
         this.capteur.attach(o);
     }
@@ -130,18 +139,5 @@ public class Canal implements ObserverdeCapteurAsync, Capteur {
     }
 
 
-    class MyCallable implements Callable
-    {
-        Runnable r;
 
-        MyCallable(final Runnable r)
-        {
-            this.r = r;
-        }
-
-        @Override
-        public Object call() throws Exception {
-            return r;
-        }
-    }
 }
