@@ -8,6 +8,8 @@ import async.capteur.strategie.AlgoDiffusion;
 import async.capteur.strategie.DiffusionAtomique;
 import async.capteur.strategie.DiffusionSeq;
 import async.capteur.strategie.DiffusionEpoque;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -16,8 +18,10 @@ import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
 import java.util.*;
+import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by josian on 08/10/14.
@@ -49,7 +53,8 @@ public class SimpleViewController implements Initializable {
 
     private Capteur capteur;
 
-    public static ScheduledExecutorService scheduledExecutor = new ScheduledThreadPoolExecutor(10) ;
+
+    public static ScheduledExecutorService scheduledExecutor ;
 
     private List<AlgoDiffusion> algos=new ArrayList<>();
     private AlgoDiffusion algoAtom=new DiffusionAtomique();
@@ -59,6 +64,9 @@ public class SimpleViewController implements Initializable {
     @Override // This method is called by the FXMLLoader when initialization is complete
     public void initialize(URL fxmlFileLocation, ResourceBundle resources)
     {
+
+        scheduledExecutor = new ScheduledThreadPoolExecutor(20);
+
         //gestion ChoiceBox
         algos.add(algoAtom);
         algos.add(algoSeq);
@@ -71,6 +79,33 @@ public class SimpleViewController implements Initializable {
                 handleStart();
             }
         });
+
+        algoBox.getSelectionModel().selectedIndexProperty().addListener(
+                new ChangeListener<Number>() {
+                    @Override
+                    public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+
+                        switch (newValue.intValue()) {
+
+                            case 0:
+                                System.out.println("*** Algo Atomique");
+                                capteur.setAlgo(new DiffusionAtomique());
+                                break;
+                            case 1:
+                                System.out.println("*** Algo Sequentielle");
+                                capteur.setAlgo(new DiffusionSeq());
+                                break;
+                            case 2:
+                                System.out.println("*** Algo Epoque");
+                                capteur.setAlgo(new DiffusionEpoque());
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+        );
+
 
         //GESTION CAPTEUR
         capteur = new CapteurImpl();
@@ -86,11 +121,6 @@ public class SimpleViewController implements Initializable {
         capteur.attach(c3);
         capteur.attach(c4);
 
-        capteur.addCanal(c1);
-        capteur.addCanal(c2);
-        capteur.addCanal(c3);
-        capteur.addCanal(c4);
-
         Afficheur aff1 = new Afficheur(c1, labelAff1);
         Afficheur aff2 = new Afficheur(c2, labelAff2);
         Afficheur aff3 = new Afficheur(c2, labelAff3);
@@ -100,17 +130,18 @@ public class SimpleViewController implements Initializable {
         c2.setAfficheur(aff2);
         c3.setAfficheur(aff3);
         c4.setAfficheur(aff4);
+
+        capteur.setAlgo(new DiffusionAtomique());
     }
+
 
     private void handleStart(){
-        AlgoDiffusion testAlgo=(AlgoDiffusion)algoBox.getValue();
-        testAlgo.setCapteur(capteur);
-        testAlgo.clear();//clear data from previous use
-        capteur.setAlgo(testAlgo);
-        System.out.println("start pressed:"+testAlgo);
+        ScheduledExecutorService ex = Executors.newSingleThreadScheduledExecutor();
+        ex.scheduleAtFixedRate(
+                ()->capteur.tick(),0, 1000, TimeUnit.MILLISECONDS
+        );
+        buttonFXStart.setDisable(true);
 
-        capteur.start();
     }
-
 }
 

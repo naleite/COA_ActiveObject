@@ -1,5 +1,6 @@
 package async.capteur.strategie;
 
+import async.Observer;
 import async.canal.Canal;
 import async.capteur.Capteur;
 
@@ -8,16 +9,19 @@ import java.util.Iterator;
 import java.util.concurrent.Future;
 
 /**
- * Created by naleite on 15/1/7.
+ *
  */
 public class DiffusionSeq implements AlgoDiffusion {
     private int nbAfficheur; //nb afficheur
-    private int value;
     private Capteur capteur;
     private ArrayList<Integer> valueCopie; //tableau des valeurs non envoyées
     private int currentDemandeGetValue;
 
+    int lastValue;//derniere valeur avant que valueCopie soit vide
+                    //utile lorsqu'on a changé de stratégie
+
     public DiffusionSeq() {
+        currentDemandeGetValue = 0;
         valueCopie = new ArrayList<Integer>();
     }
 
@@ -25,48 +29,53 @@ public class DiffusionSeq implements AlgoDiffusion {
     public void configure(int nbAfficheur, int newValue) {
         this.nbAfficheur = nbAfficheur;
         valueCopie.add(newValue);
+        lastValue = newValue;
+        System.out.print("valueCopie = ");
+        for(int i=0;i<valueCopie.size();i++) {
+            System.out.print(" " + valueCopie.get(i)+",");
+        }
+        System.out.println("\n");
     }
 
     @Override
     public void execute() {
-        Iterator<Canal> canals=capteur.canalIterator();
+        Iterator<Observer> canals=capteur.observerIterator();
         while(canals.hasNext()){
-            canals.next().updatefuture(capteur);
+            (( Canal)canals.next()).updatefuture(capteur);
         }
 
     }
 
     @Override
     public void setCapteur(Capteur c) {
-        valueCopie = new ArrayList<Integer>();
-        currentDemandeGetValue = 0;
         this.capteur = c;
+        nbAfficheur = capteur.numberOfObserver();
     }
 
     @Override
     public int getValue() {
-        ++currentDemandeGetValue;
+        currentDemandeGetValue = currentDemandeGetValue + 1;
+        System.out.println("currentgetdemand =" + currentDemandeGetValue + "/" + nbAfficheur);
 
-        int v = this.valueCopie.get(0);
-        if(currentDemandeGetValue == nbAfficheur)
-        {
-            currentDemandeGetValue = 0;
-            this.valueCopie.remove(0);
+        if(!valueCopie.isEmpty()) {
+            int v = this.valueCopie.get(0);
+            if (currentDemandeGetValue >= nbAfficheur) {
+                currentDemandeGetValue = 0;
+                this.valueCopie.remove(0);
+            }
+            return v;
         }
-        return  v;
+        else return lastValue;
+
     }
+
 
     @Override
     public boolean isDone() {
         return true;
     }
 
-    @Override
-    public void clear() {
-        currentDemandeGetValue = 0;
-        valueCopie.clear();
-        valueCopie.add(capteur.getRealLastValue());
-    }
+
 
     @Override
     public String toString(){

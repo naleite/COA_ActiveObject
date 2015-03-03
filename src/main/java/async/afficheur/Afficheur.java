@@ -10,7 +10,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Created by naleite on 15/1/7.
+ *
  */
 public class Afficheur implements ObserverdeCapteurAsync {
     private Canal canal;
@@ -30,7 +30,7 @@ public class Afficheur implements ObserverdeCapteurAsync {
         try {
             System.out.println("wait.....");
             int value= (Integer) future.get();
-
+            System.out.println("ok.....");
             Platform.runLater(() -> label.setText(Integer.toString(value)));
         } catch (Exception e) {
             e.printStackTrace();

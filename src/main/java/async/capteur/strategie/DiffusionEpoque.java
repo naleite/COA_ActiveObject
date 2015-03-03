@@ -1,5 +1,6 @@
 package async.capteur.strategie;
 
+import async.Observer;
 import async.canal.Canal;
 import async.capteur.Capteur;
 
@@ -8,7 +9,7 @@ import java.util.Iterator;
 /**
  *
  */
-public class DiffusionEpoque implements AlgoDiffusion{
+public class DiffusionEpoque implements AlgoDiffusion {
     private Capteur capteur;
     int value;
 
@@ -19,9 +20,9 @@ public class DiffusionEpoque implements AlgoDiffusion{
 
     @Override
     public void execute() {
-        Iterator<Canal> canals=capteur.canalIterator();
-        while(canals.hasNext()){
-            canals.next().updatefuture(capteur);
+        Iterator<Observer> obs=capteur.observerIterator();
+        while(obs.hasNext()){
+            ((Canal)obs.next()).updatefuture(capteur);
         }
     }
 
@@ -40,10 +41,7 @@ public class DiffusionEpoque implements AlgoDiffusion{
         return true;
     }
 
-    @Override
-    public void clear() {
 
-    }
 
     @Override
     public String toString(){

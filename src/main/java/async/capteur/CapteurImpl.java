@@ -11,18 +11,18 @@ import javafx.scene.paint.Color;
 
 import java.sql.Time;
 import java.util.*;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Created by naleite on 15/1/7.
+ *
  */
 public class CapteurImpl implements Capteur {
 
     private int value;
 
     private List<Observer> observers=new ArrayList<>();
-
-    private List<Canal> canals=new ArrayList<Canal>();
 
     private AlgoDiffusion algo;
 
@@ -37,7 +37,9 @@ public class CapteurImpl implements Capteur {
 
     @Override
     public void setAlgo(AlgoDiffusion algo) {
+
         this.algo = algo;
+        algo.setCapteur(this);
     }
 
     @Override
@@ -45,7 +47,7 @@ public class CapteurImpl implements Capteur {
         if(algo.isDone())
         {
             this.value=value;
-            algo.configure(this.canals.size(), value);
+            algo.configure(this.observers.size(), value);
 
             algo.execute();
         }
@@ -63,8 +65,6 @@ public class CapteurImpl implements Capteur {
 
     @Override
     public void tick() {
-        //Random rand = new Random();
-        //int randomNum = rand.nextInt(100);
         int ti =++tickValue;
         this.setValue(ti);
         try {
@@ -90,28 +90,16 @@ public class CapteurImpl implements Capteur {
     }
 
     @Override
+    public void start() {
+
+    }
+
+
+    @Override
     public Iterator<Observer> observerIterator(){
         return observers.iterator();
     }
 
-    @Override
-    public Iterator<Canal> canalIterator(){
-        return canals.iterator();
-    }
-
-    @Override
-    public void addCanal(Canal c){
-        if(!canals.contains(c)){
-            canals.add(c);
-        }
-    }
-
-    @Override
-    public void removeCanal(Canal c){
-        if(canals.contains(c)){
-            canals.remove(c);
-        }
-    }
 
     @Override
     public void setLabel(Label l) {
@@ -123,15 +111,15 @@ public class CapteurImpl implements Capteur {
         return this.label;
     }
 
-    @Override
-    public void start() {
-        SimpleViewController.scheduledExecutor.scheduleAtFixedRate(
-                ()->this.tick(),0, 1000, TimeUnit.MILLISECONDS
-        );
-    }
+
 
     @Override
     public int getRealLastValue() {
         return value;
+    }
+
+    @Override
+    public int numberOfObserver() {
+        return this.observers.size();
     }
 }

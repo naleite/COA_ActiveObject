@@ -1,5 +1,6 @@
 package async.capteur.strategie;
 
+import async.Observer;
 import async.canal.Canal;
 import async.capteur.Capteur;
 
@@ -15,12 +16,10 @@ public class DiffusionAtomique implements AlgoDiffusion {
     private int nbAfficheur; //nb afficheur
     private Capteur capteur;
     private int value;
-    private boolean execute_algo;
     private List<Future<Integer>> listFutur = new ArrayList<Future<Integer>>();
 
     public DiffusionAtomique() {
         listFutur = new ArrayList<Future<Integer>>();
-        execute_algo = false;
     }
 
     @Override
@@ -32,10 +31,10 @@ public class DiffusionAtomique implements AlgoDiffusion {
     @Override
     public void execute() {
 
-        Iterator<Canal> canals=capteur.canalIterator();
+        Iterator<Observer> obs=capteur.observerIterator();
         listFutur.clear();
-        while(canals.hasNext()){
-            Future<Integer> f1 = canals.next().updatefuture(capteur);
+        while(obs.hasNext()){
+            Future<Integer> f1 = ((Canal) obs.next()).updatefuture(capteur);
             listFutur.add(f1);
         }
     }
@@ -54,12 +53,7 @@ public class DiffusionAtomique implements AlgoDiffusion {
     public boolean isDone() {
         boolean res = true;
         int currentFinishedFuture = 0;
-        if(execute_algo) {
-            execute_algo = false;
-            System.out.println("changing algorithm");
-            return true; // si on vient de changer de strategie
-                        //evite de tester si tous les obs sont notifiés
-        }
+
         if(listFutur.size() != nbAfficheur)
         {
             return false;
@@ -81,12 +75,7 @@ public class DiffusionAtomique implements AlgoDiffusion {
         return res;
     }
 
-    @Override
-    public void clear() {
-        listFutur.clear();
-        value = capteur.getRealLastValue();
-        execute_algo = true;
-    }
+
 
     @Override
     public String toString(){

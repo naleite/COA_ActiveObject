@@ -16,7 +16,7 @@ import java.util.concurrent.*;
  * Created by naleite on 15/1/7.
  */
 public class Canal implements ObserverdeCapteurAsync, Capteur {
-
+    final int uniq_delay = 500;
     private Capteur capteur;
     private Afficheur afficheur;
     private AlgoDiffusion algo;
@@ -48,10 +48,9 @@ public class Canal implements ObserverdeCapteurAsync, Capteur {
     @Override
     public Future<Integer> getValueFuture() {
         Callable<Integer> c = () -> {
-            System.out.println("getValueFuture Canal#getValueFuture");
             return this.capteur.getValue();};
 
-        int delay = 100 + (int)(Math.random()*400);
+        int delay = 100 + (int)(Math.random()*900);
         return SimpleViewController.scheduledExecutor.schedule(c, delay, TimeUnit.MILLISECONDS);
     }
 
@@ -59,7 +58,6 @@ public class Canal implements ObserverdeCapteurAsync, Capteur {
     public Future updatefuture(Capteur ca) {
         Callable<String> c = () -> {
             this.afficheur.update((ObserverdeCapteurAsync) this);
-            System.out.println("executorService update Canal#updatefuture");
             return "ok";};
         int delay = 100 + (int)(Math.random()*400); //radom value between 500 and 1000
         return SimpleViewController.scheduledExecutor.schedule(c, delay, TimeUnit.MILLISECONDS);
@@ -67,7 +65,6 @@ public class Canal implements ObserverdeCapteurAsync, Capteur {
 
     @Override
     public void update(ObserverdeCapteurAsync subject) {
-        System.out.println("Not executed");
         this.afficheur.update((ObserverdeCapteurAsync) this);
     }
 
@@ -87,20 +84,8 @@ public class Canal implements ObserverdeCapteurAsync, Capteur {
         return null;
     }
 
-    @Override
-    public Iterator<Canal> canalIterator() {
-        return null;
-    }
 
-    @Override
-    public void addCanal(Canal c) {
 
-    }
-
-    @Override
-    public void removeCanal(Canal c) {
-
-    }
 
     @Override
     public void setLabel(Label l) {
@@ -120,6 +105,11 @@ public class Canal implements ObserverdeCapteurAsync, Capteur {
     @Override
     public int getRealLastValue() {
         return 0;
+    }
+
+    @Override
+    public int numberOfObserver() {
+        return capteur.numberOfObserver();
     }
 
     @Override
