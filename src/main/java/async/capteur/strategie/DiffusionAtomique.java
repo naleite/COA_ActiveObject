@@ -3,6 +3,8 @@ package async.capteur.strategie;
 import async.Observer;
 import async.canal.Canal;
 import async.capteur.Capteur;
+import javafx.application.Platform;
+import javafx.scene.control.Label;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -13,6 +15,7 @@ import java.util.concurrent.Future;
  *
  */
 public class DiffusionAtomique implements AlgoDiffusion {
+    private Label label;
     private int nbAfficheur; //nb afficheur
     private Capteur capteur;
     private int value;
@@ -22,10 +25,16 @@ public class DiffusionAtomique implements AlgoDiffusion {
         listFutur = new ArrayList<Future<Integer>>();
     }
 
+    public DiffusionAtomique(Label l) {
+        this();
+        this.setLabel(l);
+    }
+
     @Override
     public void configure(int nbAfficheur, int newValue) {
         this.nbAfficheur  = nbAfficheur;
         this.value = newValue;
+        Platform.runLater(() -> label.setText(Integer.toString(this.value)));
     }
 
     @Override
@@ -41,7 +50,9 @@ public class DiffusionAtomique implements AlgoDiffusion {
 
     @Override
     public void setCapteur(Capteur c){
+
         this.capteur=c;
+        this.value = this.capteur.getRealLastValue();
     }
 
     @Override
@@ -75,6 +86,10 @@ public class DiffusionAtomique implements AlgoDiffusion {
         return res;
     }
 
+    @Override
+    public void setLabel(Label label) {
+        this.label = label;
+    }
 
 
     @Override

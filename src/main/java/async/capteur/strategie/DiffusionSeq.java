@@ -3,6 +3,8 @@ package async.capteur.strategie;
 import async.Observer;
 import async.canal.Canal;
 import async.capteur.Capteur;
+import javafx.application.Platform;
+import javafx.scene.control.Label;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -18,11 +20,18 @@ public class DiffusionSeq implements AlgoDiffusion {
     private int currentDemandeGetValue;
 
     int lastValue;//derniere valeur avant que valueCopie soit vide
-                    //utile lorsqu'on a changé de stratégie
+    private Label label;
+    //utile lorsqu'on a changé de stratégie
 
     public DiffusionSeq() {
         currentDemandeGetValue = 0;
         valueCopie = new ArrayList<Integer>();
+    }
+
+    public DiffusionSeq(Label label)
+    {
+        this();
+        this.setLabel(label);
     }
 
     @Override
@@ -49,23 +58,30 @@ public class DiffusionSeq implements AlgoDiffusion {
     @Override
     public void setCapteur(Capteur c) {
         this.capteur = c;
+        this.valueCopie.add(this.capteur.getRealLastValue());
         nbAfficheur = capteur.numberOfObserver();
     }
 
     @Override
     public int getValue() {
         currentDemandeGetValue = currentDemandeGetValue + 1;
-        System.out.println("currentgetdemand =" + currentDemandeGetValue + "/" + nbAfficheur);
+
 
         if(!valueCopie.isEmpty()) {
             int v = this.valueCopie.get(0);
-            if (currentDemandeGetValue >= nbAfficheur) {
+            if (currentDemandeGetValue > nbAfficheur) {
                 currentDemandeGetValue = 0;
                 this.valueCopie.remove(0);
             }
+            System.out.println("currentgetdemand =" + currentDemandeGetValue + "/" + nbAfficheur);
+            Platform.runLater(() -> label.setText(Integer.toString(v)));
             return v;
         }
-        else return lastValue;
+        else {
+            System.out.println("currentgetdemand =" + currentDemandeGetValue + "/" + nbAfficheur);
+            Platform.runLater(() -> label.setText(Integer.toString(lastValue)));
+            return lastValue;
+        }
 
     }
 
@@ -75,6 +91,10 @@ public class DiffusionSeq implements AlgoDiffusion {
         return true;
     }
 
+    @Override
+    public void setLabel(Label label) {
+        this.label = label;
+    }
 
 
     @Override

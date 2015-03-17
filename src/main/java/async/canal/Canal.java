@@ -50,7 +50,7 @@ public class Canal implements ObserverdeCapteurAsync, Capteur {
         Callable<Integer> c = () -> {
             return this.capteur.getValue();};
 
-        int delay = 100 + (int)(Math.random()*900);
+        int delay = 400 + (int)(Math.random()*1000);
         return SimpleViewController.scheduledExecutor.schedule(c, delay, TimeUnit.MILLISECONDS);
     }
 
@@ -59,7 +59,7 @@ public class Canal implements ObserverdeCapteurAsync, Capteur {
         Callable<String> c = () -> {
             this.afficheur.update((ObserverdeCapteurAsync) this);
             return "ok";};
-        int delay = 100 + (int)(Math.random()*400); //radom value between 500 and 1000
+        int delay = 200 + (int)(Math.random()*100); //radom value between 500 and 1000
         return SimpleViewController.scheduledExecutor.schedule(c, delay, TimeUnit.MILLISECONDS);
     }
 

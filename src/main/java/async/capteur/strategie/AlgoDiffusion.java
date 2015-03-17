@@ -1,6 +1,7 @@
 package async.capteur.strategie;
 
 import async.capteur.Capteur;
+import javafx.scene.control.Label;
 
 /**
  *
@@ -20,5 +21,11 @@ public interface AlgoDiffusion {
      * @return vrai si la diffusion est terminé, faux sinon
      */
     boolean isDone();
+
+    /**
+     * to display the version
+     * @param label
+     */
+    void setLabel(Label label);
 
 }

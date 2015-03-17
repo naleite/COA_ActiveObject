@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ActiveObject.iml" filepath="$PROJECT_DIR$/ActiveObject.iml" />
+      <module fileurl="file://$PROJECT_DIR$/activeObject.iml" filepath="$PROJECT_DIR$/activeObject.iml" />
     </modules>
   </component>
 </project>
+

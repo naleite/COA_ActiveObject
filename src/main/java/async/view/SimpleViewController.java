@@ -34,6 +34,9 @@ public class SimpleViewController implements Initializable {
     private Button buttonFXStart;
 
     @FXML
+    private Label labelVersion;
+
+    @FXML
     private ChoiceBox algoBox;
 
     @FXML
@@ -57,13 +60,16 @@ public class SimpleViewController implements Initializable {
     public static ScheduledExecutorService scheduledExecutor ;
 
     private List<AlgoDiffusion> algos=new ArrayList<>();
-    private AlgoDiffusion algoAtom=new DiffusionAtomique();
-    private AlgoDiffusion algoSeq=new DiffusionSeq();
-    private AlgoDiffusion algoEpo=new DiffusionEpoque();
+    private AlgoDiffusion algoAtom;
+    private AlgoDiffusion algoSeq;
+    private AlgoDiffusion algoEpo;
 
     @Override // This method is called by the FXMLLoader when initialization is complete
     public void initialize(URL fxmlFileLocation, ResourceBundle resources)
     {
+        algoAtom=new DiffusionAtomique(labelVersion);
+        algoSeq=new DiffusionSeq(labelVersion);
+        algoEpo=new DiffusionEpoque(labelVersion);
 
         scheduledExecutor = new ScheduledThreadPoolExecutor(20);
 
@@ -89,15 +95,15 @@ public class SimpleViewController implements Initializable {
 
                             case 0:
                                 System.out.println("*** Algo Atomique");
-                                capteur.setAlgo(new DiffusionAtomique());
+                                capteur.setAlgo(new DiffusionAtomique(labelVersion));
                                 break;
                             case 1:
                                 System.out.println("*** Algo Sequentielle");
-                                capteur.setAlgo(new DiffusionSeq());
+                                capteur.setAlgo(new DiffusionSeq(labelVersion));
                                 break;
                             case 2:
                                 System.out.println("*** Algo Epoque");
-                                capteur.setAlgo(new DiffusionEpoque());
+                                capteur.setAlgo(new DiffusionEpoque(labelVersion));
                                 break;
                             default:
                                 break;
@@ -131,7 +137,7 @@ public class SimpleViewController implements Initializable {
         c3.setAfficheur(aff3);
         c4.setAfficheur(aff4);
 
-        capteur.setAlgo(new DiffusionAtomique());
+        capteur.setAlgo(new DiffusionAtomique(labelVersion));
     }
 
 
