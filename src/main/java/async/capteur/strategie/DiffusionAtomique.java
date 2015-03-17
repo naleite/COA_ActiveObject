@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.concurrent.Future;
 
 /**
- *
+ *DiffusionAtomique
  */
 public class DiffusionAtomique implements AlgoDiffusion {
     private Label label;
